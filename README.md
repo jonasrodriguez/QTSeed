@@ -1,4 +1,4 @@
-# seed-cpp — Seed for C++ Systelab projects
+# seed-cpp — Seed for QT Systelab projects
 
 This project is an application skeleton for a client QT application.
 
