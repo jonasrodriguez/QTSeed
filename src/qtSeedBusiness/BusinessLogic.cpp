@@ -1,5 +1,6 @@
 #include "BusinessLogic.h"
 #include <QDebug>
+#include "BusinessDefinitions.h"
 #include "Comms.h"
 #include "DbManager.h"
 
@@ -9,11 +10,11 @@ BusinessLogic::BusinessLogic() : logged_user_("") {
 }
 
 void BusinessLogic::StartUp() {
-  comms_->StartUp();
+  QVector<patient> pat;
   db_->StartUp();
+  comms_->SetCommsAddress("http://127.0.0.1", "8080");
+  comms_->GetPatients(pat);
 }
-
-void BusinessLogic::CloseComms() { comms_->ShutDown(); }
 
 bool BusinessLogic::loginUser(QString user, QString pass) {
   if (db_->CheckUser(user, pass)) {
