@@ -3,3 +3,5 @@
 This project is an application skeleton for a client QT application.
 
 ## Getting Started
+
+Clone and build with cmake.
