@@ -1,19 +1,22 @@
-#pragma once
+#ifndef BUSINESSDEFINITIONS_H
+#define BUSINESSDEFINITIONS_H
 
 #include <QString>
 
-struct patientAddress {
+struct PatientAddress {
   QString coordinates;
   QString street;
   QString city;
-  int zip;
+  QString zip;
 };
 
-struct patient {
+struct Patient {
   int id;
   QString name;
   QString surname;
   QString email;
   QString dateOfBirth;
-  patientAddress address;
+  PatientAddress address;
 };
+
+#endif  // BUSINESSDEFINITIONS_H

@@ -1,10 +1,21 @@
-#pragma once
-#include <QString>
-class IBusiness {
+#ifndef IBUSINESS_H
+#define IBUSINESS_H
+
+#include "BusinessDefinitions.h"
+#include <QObject>
+
+class IBusiness : public QObject {
+    Q_OBJECT
  public:
   IBusiness() = default;
   virtual ~IBusiness() = default;
 
   virtual void StartUp() = 0;
-  virtual bool loginUser(QString, QString) = 0;
+  virtual void ShutDown() = 0;
+  virtual bool loginUser(QString user, QString password) = 0;
+
+public slots:
+    virtual void ProcessPatients(QVector<Patient> patients, QString errors) = 0;
 };
+
+#endif  // IBUSINESS_H

@@ -31,6 +31,7 @@ Rectangle{
                 Layout.fillWidth: true
                 placeholderText: "Password"
                 echoMode: TextInput.Password
+                Keys.onPressed: if (event.key === Qt.Key_Return) { loginLogic.buttonLogin(idUsernameTextField.text, idPasswordTextField.text) }
                 KeyNavigation.tab: idBtnLogin                
             }
 

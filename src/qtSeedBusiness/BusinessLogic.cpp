@@ -1,6 +1,6 @@
 #include "BusinessLogic.h"
 #include <QDebug>
-#include "BusinessDefinitions.h"
+
 #include "Comms.h"
 #include "DbManager.h"
 
@@ -10,10 +10,16 @@ BusinessLogic::BusinessLogic() : logged_user_("") {
 }
 
 void BusinessLogic::StartUp() {
-  QVector<patient> pat;
+  QObject::connect(comms_.get(), SIGNAL(SendPatients(QVector<Patient>, QString)), this, SLOT(ProcessPatients(QVector<Patient>, QString)));
   db_->StartUp();
   comms_->SetCommsAddress("http://127.0.0.1", "8080");
-  comms_->GetPatients(pat);
+  GetPatientsList();
+}
+
+void BusinessLogic::ShutDown() {
+    QCoreApplication::processEvents();
+    db_.reset();
+    comms_.reset();
 }
 
 bool BusinessLogic::loginUser(QString user, QString pass) {
@@ -22,4 +28,24 @@ bool BusinessLogic::loginUser(QString user, QString pass) {
     return true;
   } else
     return false;
+}
+
+void BusinessLogic::GetPatientsList() {
+
+    comms_->GetPatientsList();
+}
+
+void BusinessLogic::ProcessPatients(QVector<Patient> patients, QString errors)
+{
+    qDebug() << "BusinessLogic::ProcessPatients";
+    if (!errors.isEmpty()) {
+        qDebug() << errors;
+
+        return;
+    }
+
+    for (auto i : patients)
+    {
+        qDebug() << "Patient name:" << i.name;
+    }
 }

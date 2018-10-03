@@ -10,11 +10,15 @@ class BusinessLogic : public IBusiness {
   ~BusinessLogic() = default;
 
   void StartUp() override;
+  void ShutDown() override;
 
   bool loginUser(QString user, QString pass) override;
 
- private:
-  void CloseComms();
+protected:
+  void GetPatientsList();
+
+public slots:
+   void ProcessPatients(QVector<Patient> patients, QString errors) override;
 
  private:
   std::unique_ptr<IComms> comms_;
