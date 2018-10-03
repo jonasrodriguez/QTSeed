@@ -1,7 +1,7 @@
 #pragma once
-#include <QtNetwork>
-#include <QNetworkAccessManager>
 #include <QJsonObject>
+#include <QNetworkAccessManager>
+#include <QtNetwork>
 #include "IComms.h"
 
 class Comms : public IComms {

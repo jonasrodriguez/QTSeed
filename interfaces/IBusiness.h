@@ -1,11 +1,11 @@
 #ifndef IBUSINESS_H
 #define IBUSINESS_H
 
-#include "BusinessDefinitions.h"
 #include <QObject>
+#include "BusinessDefinitions.h"
 
 class IBusiness : public QObject {
-    Q_OBJECT
+  Q_OBJECT
  public:
   IBusiness() = default;
   virtual ~IBusiness() = default;
@@ -14,8 +14,8 @@ class IBusiness : public QObject {
   virtual void ShutDown() = 0;
   virtual bool loginUser(QString user, QString password) = 0;
 
-public slots:
-    virtual void ProcessPatients(QVector<Patient> patients, QString errors) = 0;
+ public slots:
+  virtual void ProcessPatients(QVector<Patient> patients, QString errors) = 0;
 };
 
 #endif  // IBUSINESS_H

@@ -10,16 +10,19 @@ BusinessLogic::BusinessLogic() : logged_user_("") {
 }
 
 void BusinessLogic::StartUp() {
-  QObject::connect(comms_.get(), SIGNAL(SendPatients(QVector<Patient>, QString)), this, SLOT(ProcessPatients(QVector<Patient>, QString)));
+  QObject::connect(comms_.get(),
+                   SIGNAL(SendPatients(QVector<Patient>, QString)), this,
+                   SLOT(ProcessPatients(QVector<Patient>, QString)));
   db_->StartUp();
   comms_->SetCommsAddress("http://127.0.0.1", "8080");
+
   GetPatientsList();
 }
 
 void BusinessLogic::ShutDown() {
-    QCoreApplication::processEvents();
-    db_.reset();
-    comms_.reset();
+  QCoreApplication::processEvents();
+  db_.reset();
+  comms_.reset();
 }
 
 bool BusinessLogic::loginUser(QString user, QString pass) {
@@ -30,22 +33,17 @@ bool BusinessLogic::loginUser(QString user, QString pass) {
     return false;
 }
 
-void BusinessLogic::GetPatientsList() {
+void BusinessLogic::GetPatientsList() { comms_->GetPatientsList(); }
 
-    comms_->GetPatientsList();
-}
+void BusinessLogic::ProcessPatients(QVector<Patient> patients, QString errors) {
+  qDebug() << "BusinessLogic::ProcessPatients";
+  if (!errors.isEmpty()) {
+    qDebug() << errors;
 
-void BusinessLogic::ProcessPatients(QVector<Patient> patients, QString errors)
-{
-    qDebug() << "BusinessLogic::ProcessPatients";
-    if (!errors.isEmpty()) {
-        qDebug() << errors;
+    return;
+  }
 
-        return;
-    }
-
-    for (auto i : patients)
-    {
-        qDebug() << "Patient name:" << i.name;
-    }
+  for (auto i : patients) {
+    qDebug() << "Patient name:" << i.name;
+  }
 }

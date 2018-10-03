@@ -14,11 +14,11 @@ class BusinessLogic : public IBusiness {
 
   bool loginUser(QString user, QString pass) override;
 
-protected:
+ protected:
   void GetPatientsList();
 
-public slots:
-   void ProcessPatients(QVector<Patient> patients, QString errors) override;
+ public slots:
+  void ProcessPatients(QVector<Patient> patients, QString errors) override;
 
  private:
   std::unique_ptr<IComms> comms_;
