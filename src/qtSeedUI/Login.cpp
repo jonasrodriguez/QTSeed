@@ -6,6 +6,6 @@ Login::Login(QObject *parent, std::shared_ptr<IBusiness> &business_logic)
 
 void Login::buttonLogin(QString user, QString pass) {
   login_success_ = business_logic_->loginUser(user, pass);
-  qDebug() << "userLogged: " << login_success_;
+
   emit loginChanged();
 }

@@ -2,11 +2,11 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <memory>
-
 #include "BusinessLogic.h"
 #include "Dashboard.h"
 #include "IBusiness.h"
 #include "Login.h"
+#include "PatientList.h"
 
 int main(int argc, char *argv[]) {
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -24,8 +24,13 @@ int main(int argc, char *argv[]) {
   Dashboard dashboard(nullptr, business_logic);
   engine.rootContext()->setContextProperty("dashboardLogic", &dashboard);
 
+  PatientList PatientList(nullptr, business_logic);
+  engine.rootContext()->setContextProperty("PatientList", &PatientList);
+
   engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
   if (engine.rootObjects().isEmpty()) return -1;
+
+  QObject::connect(&app, &QCoreApplication::aboutToQuit, [&]() { business_logic->ShutDown(); });
 
   return app.exec();
 }

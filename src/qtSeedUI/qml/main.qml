@@ -5,17 +5,22 @@ Window {
     id: mainWindow
     visible: true
     title: qsTr("QT Seed")
-    width: pageLoader.implicitWidth
-    height: pageLoader.implicitHeight
+//    width: pageLoader.implicitWidth
+//    height: pageLoader.implicitHeight
+//    width: loginLogic.loginSuccess ? 1280 : 400
+//    height: loginLogic.loginSuccess ? 720 : 300
+    width: 1280
+    height: 720
 
-    Loader {
+    Loader {        
         id: pageLoader
+        anchors.fill: parent
+//        source: loginLogic.loginSuccess ? "Dashboard.qml" : "Login.qml"
+        source: "Dashboard.qml"
 
-        source: loginLogic.loginSuccess ? "Dashboard.qml" : "Login.qml"
-
-        onLoaded: {
-            setX(Screen.width / 2 - width / 2);
-            setY(Screen.height / 2 - height / 2);
-        }
+//        onLoaded: {
+//            setX(Screen.width / 2 - width / 2);
+//            setY(Screen.height / 2 - height / 2);
+//        }
     }
 }

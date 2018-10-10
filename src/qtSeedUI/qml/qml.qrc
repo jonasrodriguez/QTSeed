@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>Dashboard.qml</file>
         <file>Login.qml</file>
+        <file>PatientDelegate.qml</file>
     </qresource>
 </RCC>

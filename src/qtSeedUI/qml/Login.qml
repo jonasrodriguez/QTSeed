@@ -4,8 +4,8 @@ import QtQuick.Layouts 1.3
 
 Rectangle{
     id: idLogin
-    width: 400
-    height: 300
+//    width: 400
+//    height: 300
 
     Item {
         id: idItemLogin

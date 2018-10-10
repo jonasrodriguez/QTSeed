@@ -14,6 +14,9 @@ class IBusiness : public QObject {
   virtual void ShutDown() = 0;
   virtual bool loginUser(QString user, QString password) = 0;
 
+ signals:
+  void SendPatientList(QVector<Patient> patients);
+
  public slots:
   virtual void ProcessPatients(QVector<Patient> patients, QString errors) = 0;
 };

@@ -12,7 +12,6 @@ void Comms::GetPatientsList() {
   QVector<Patient> patients;
   QString comm_errors;
 
-  qDebug() << "Comms::GetPatients";
   QNetworkAccessManager* manager = new QNetworkAccessManager();
 
   QNetworkRequest request;
@@ -25,7 +24,7 @@ void Comms::GetPatientsList() {
 };
 
 void Comms::ProcessGetPatientsList(QNetworkReply* reply) {
-  qDebug() << "Comms::ProcessPatients()";
+
   QVector<Patient> patients;
   QString errors("");
 
@@ -47,18 +46,19 @@ void Comms::ProcessGetPatientsList(QNetworkReply* reply) {
 
 Patient Comms::ReadJsonPatient(QJsonObject obj) {
   Patient patient;
-  patient.id = obj["id"].toInt();
-  patient.name = obj["name"].toString();
-  patient.surname = obj["surname"].toString();
-  patient.dateOfBirth = obj["dob"].toString();
+  patient.id = obj[json_id].toInt();
+  patient.name = obj[json_name].toString();
+  patient.surname = obj[json_surname].toString();
+  patient.email = obj[json_email].toString();
+  patient.dateOfBirth = obj[json_dob].toString();
 
   PatientAddress address;
-  QJsonObject add = obj["address"].toObject();
+  QJsonObject add = obj[json_address].toObject();
 
-  address.coordinates = add["coordinates"].toString();
-  address.street = add["street"].toString();
-  address.city = add["city"].toString();
-  address.zip = add["zip"].toString();
+  address.coordinates = add[json_coordinates].toString();
+  address.street = add[json_street].toString();
+  address.city = add[json_city].toString();
+  address.zip = add[json_zip].toString();
   patient.address = address;
 
   return patient;
