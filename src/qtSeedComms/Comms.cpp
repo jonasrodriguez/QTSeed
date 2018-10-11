@@ -15,7 +15,7 @@ void Comms::GetPatientsList() {
   QNetworkAccessManager* manager = new QNetworkAccessManager();
 
   QNetworkRequest request;
-  request.setUrl(QUrl(ip_ + "/seed/v1/patients"));
+  request.setUrl(QUrl(ip_ + SeedEndpoint));
 
   manager->get(request);
   QObject::connect(
@@ -44,6 +44,31 @@ void Comms::ProcessGetPatientsList(QNetworkReply* reply) {
   emit SendPatients(patients, errors);
 }
 
+void Comms::PostPatient(Patient patient) {
+    qDebug() << "Comms::PostPatient";
+  QJsonDocument patientDocument = CreateJsonPatient(patient);
+  QNetworkAccessManager* manager = new QNetworkAccessManager();
+
+  QNetworkRequest request;
+  request.setUrl(QUrl(ip_ + SeedEndpoint));
+  request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
+  manager->post(request, patientDocument.toJson());
+  QObject::connect(
+      manager, &QNetworkAccessManager::finished,
+      [&](QNetworkReply* reply) { ProcessPostPatient(reply); });
+}
+
+void Comms::ProcessPostPatient(QNetworkReply* reply) {
+  qDebug() << "Comms::ProcessPostPatient";
+  QString errors("");
+
+  if (reply->error() != QNetworkReply::NoError) {
+    errors = reply->errorString();
+    qDebug() << errors;
+    return;
+  }
+}
+
 Patient Comms::ReadJsonPatient(QJsonObject obj) {
   Patient patient;
   patient.id = obj[json_id].toInt();
@@ -62,4 +87,24 @@ Patient Comms::ReadJsonPatient(QJsonObject obj) {
   patient.address = address;
 
   return patient;
+}
+
+QJsonDocument Comms::CreateJsonPatient(Patient patient) {
+
+  QJsonObject patientObject;
+  patientObject.insert(json_name, patient.name);
+  patientObject.insert(json_surname, patient.surname);
+  patientObject.insert(json_email, patient.email);
+  patientObject.insert(json_dob, patient.dateOfBirth);
+
+  QJsonObject addressObject;
+  addressObject.insert(json_coordinates, patient.address.coordinates);
+  addressObject.insert(json_street, patient.address.street);
+  addressObject.insert(json_city, patient.address.city);
+  addressObject.insert(json_zip, patient.address.zip);
+  patientObject.insert(json_address, addressObject);
+
+  QJsonDocument patientDocument(patientObject);
+  qDebug() << patientDocument;
+  return patientDocument;
 }

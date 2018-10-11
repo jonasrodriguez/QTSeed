@@ -4,5 +4,9 @@
         <file>Dashboard.qml</file>
         <file>Login.qml</file>
         <file>PatientDelegate.qml</file>
+        <file>PatientArea.qml</file>
+        <file>res/werfenIcon.png</file>
+        <file>res/addUserIcon.png</file>
+        <file>NewPatient.qml</file>
     </qresource>
 </RCC>

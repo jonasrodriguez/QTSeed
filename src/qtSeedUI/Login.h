@@ -9,6 +9,7 @@ class Login : public QObject {
   Login(QObject *parent, std::shared_ptr<IBusiness> &business_logic);
 
   bool getLoginSuccess() const { return login_success_; }
+
  signals:
   void loginChanged();
 

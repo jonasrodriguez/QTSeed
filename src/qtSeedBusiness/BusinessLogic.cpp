@@ -25,7 +25,7 @@ void BusinessLogic::ShutDown() {
   comms_.reset();
 }
 
-bool BusinessLogic::loginUser(QString user, QString pass) {
+bool BusinessLogic::LoginUser(QString user, QString pass) {
   if (db_->CheckUser(user, pass)) {
     logged_user_ = user;
     return true;
@@ -42,4 +42,9 @@ void BusinessLogic::ProcessPatients(QVector<Patient> patients, QString errors) {
   else {
     emit SendPatientList(patients);
   }
+}
+
+void BusinessLogic::SaveNewPatient(Patient patient) {
+  qDebug() << "BusinessLogic::SaveNewPatient";
+  comms_->PostPatient(patient);
 }

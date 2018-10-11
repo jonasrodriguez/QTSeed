@@ -12,7 +12,6 @@ Rectangle {
         width: parent.width * 0.1
         height: parent.height * 0.3
         anchors.left: parent.left
-        border.color: "black"
         color: "transparent"
         Rectangle {
             id: idLabelArea
@@ -27,6 +26,7 @@ Rectangle {
             }
         }
         Rectangle {
+            id: idTextArea
             width: parent.width / 2
             height: parent.height
             border.color: "black"
@@ -34,7 +34,7 @@ Rectangle {
             anchors.left: idLabelArea.right
             Text{
                 id: idText
-                anchors.fill: parent
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 5
                 text: "1234"
             }
@@ -47,20 +47,28 @@ Rectangle {
         anchors.left: idArea.right
         border.color: "black"
         color: "transparent"
-        Text {
-            id: nameLabel
-            anchors.verticalCenter: parent.verticalCenter
-            text: "Patient Name:"
-        }
         Rectangle {
-            width: parent.width / 2
+            id: nameLabelArea
+            width: parent.width / 3
             height: parent.height
             border.color: "black"
             color: "transparent"
-            anchors.left: nameLabel.right
+            Text {
+                id: nameLabel
+                anchors.verticalCenter: parent.verticalCenter
+                text: "Patient Name:"
+            }
+        }
+        Rectangle {
+            id: nameTextArea
+            width: parent.width - nameLabelArea.width
+            height: parent.height
+            border.color: "black"
+            color: "transparent"
+            anchors.left: nameLabelArea.right
             Text{
                 id: nameText
-                anchors.fill: parent
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 5
                 text: model.name
             }
@@ -68,52 +76,103 @@ Rectangle {
     }
     Rectangle {
         id: surnameArea
-        width: parent.width * 0.3
+        width: parent.width * 0.4
         height: parent.height * 0.3
         anchors.left: nameArea.right
         border.color: "black"
         color: "transparent"
-        Text {
-            id: surnameLabel
-            anchors.verticalCenter: parent.verticalCenter
-            text: "Patient Surname:"
-        }
         Rectangle {
-            width: parent.width / 2
+            id: surnameLabelArea
+            width: parent.width / 3
             height: parent.height
             border.color: "black"
             color: "transparent"
-            anchors.left: surnameLabel.right
+            Text {
+                id: surnameLabel
+                anchors.verticalCenter: parent.verticalCenter
+                text: "Patient Surname:"
+            }
+        }
+        Rectangle {
+            id: surnameTextArea
+            width: parent.width - surnameLabelArea.width
+            height: parent.height
+            border.color: "black"
+            color: "transparent"
+            anchors.left: surnameLabelArea.right
             Text{
                 id: surnameText
-                anchors.fill: parent
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 5
                 text: model.surname
             }
         }
     }
     Rectangle {
-        id: emailArea
+        id: doblArea
         width: parent.width * 0.3
         height: parent.height * 0.3
         anchors.left: nameArea.left;
         anchors.top: nameArea.bottom;
         border.color: "black"
         color: "transparent"
-        Text {
-            id: emailLabel
-            anchors.verticalCenter: parent.verticalCenter
-            text: "Patient Email:"
-        }
         Rectangle {
-            width: parent.width / 2
+            id: dobLabelArea
+            width: parent.width / 3
             height: parent.height
             border.color: "black"
             color: "transparent"
-            anchors.left: emailLabel.right
+            Text {
+                id: dobLabel
+                anchors.verticalCenter: parent.verticalCenter
+                text: "Patient DoB:"
+            }
+        }
+        Rectangle {
+            id: dobTextArea
+            width: parent.width  - dobLabelArea.width
+            height: parent.height
+            border.color: "black"
+            color: "transparent"
+            anchors.left: dobLabelArea.right
+            Text{
+                id: doblText
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 5
+                text: model.dob
+            }
+        }
+    }
+    Rectangle {
+        id: emailArea
+        width: parent.width * 0.4
+        height: parent.height * 0.3
+        anchors.left: surnameArea.left;
+        anchors.top: surnameArea.bottom;
+        border.color: "black"
+        color: "transparent"
+        Rectangle {
+            id: emailLabelArea
+            width: parent.width / 3
+            height: parent.height
+            border.color: "black"
+            color: "transparent"
+            Text {
+                id: emailLabel
+                anchors.verticalCenter: parent.verticalCenter
+                text: "Patient Email:"
+            }
+        }
+        Rectangle {
+            id: emailTextArea
+            width: parent.width  - emailLabelArea.width
+            height: parent.height
+            border.color: "black"
+            color: "transparent"
+            anchors.left: emailLabelArea.right
             Text{
                 id: emailText
-                anchors.fill: parent
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 5
                 text: model.email
             }
