@@ -8,5 +8,6 @@
         <file>res/werfenIcon.png</file>
         <file>res/addUserIcon.png</file>
         <file>NewPatient.qml</file>
+        <file>NewPatientField.qml</file>
     </qresource>
 </RCC>

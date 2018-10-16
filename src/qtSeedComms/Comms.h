@@ -14,13 +14,15 @@ class Comms : public IComms {
   void SetCommsAddress(QString, QString) override;
   void GetPatientsList() override;
   void PostPatient(Patient patient) override;
+  void DeletePatient(int patientId) override;
 
  private:
   Patient ReadJsonPatient(QJsonObject obj);
-  QJsonDocument CreateJsonPatient(Patient patient);
+  QByteArray CreateJsonPatient(Patient patient);
 
   void ProcessGetPatientsList(QNetworkReply *);
   void ProcessPostPatient(QNetworkReply *);
+  void ProcessDeletePatient(QNetworkReply *);
 
  private:
   QString ip_;

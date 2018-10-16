@@ -14,6 +14,7 @@ class IBusiness : public QObject {
   virtual void ShutDown() = 0;
   virtual bool LoginUser(QString user, QString password) = 0;
   virtual void SaveNewPatient(Patient patient) = 0;
+  virtual void DeletePatient(int patientId) = 0;
 
  signals:
   void SendPatientList(QVector<Patient> patients);

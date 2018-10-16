@@ -4,26 +4,24 @@ import QtQuick.Dialogs 1.2
 Dialog {
     title: "Add New Patient"
     modality: Qt.WindowModal
-    height: 600
+    height: 550
     width: 400
     standardButtons: StandardButton.Cancel | StandardButton.Save
-//    visible: true
 
-//    Component.onCompleted: {
-//        nameValue.text = "";
-//        surnameValue.text = "";
-//        dobValue.text = "";
-//        emailValue = "";
-//    }
+    onAccepted: {
+        newPatientDlg.saveNewPatient(nameField.fieldValue.text, surnameField.fieldValue.text, yearValue.text + monthValue.text + dayValue.text,
+                                     emailField.fieldValue.text, coorField.fieldValue.text, streetField.fieldValue.text, cityField.fieldValue.text, zipField.fieldValue.text);
+        close();
+    }
 
-//    onAccepted: {
-//        newPatientDlg.saveNewPatient(nameValue.text, surnameValue.text, dobValue.text, emailValue.text);
-//        close();
-//    }
+    property real fieldHeight: newUserTitleArea.height * 0.8
+    property real fieldWidth:  dialogArea.width * 0.9
 
     Item {
+        id: dialogArea
         anchors.fill: parent
 
+        //Title
         Item {
             id: newUserTitleArea
             width: parent.width * 0.9
@@ -48,195 +46,163 @@ Dialog {
             }
         }
 
-        Item {
-            id: patientName
-            width: parent.width * 0.9
-            height: newUserTitleArea.height * 0.8
+        //Name
+        NewPatientField {
+            id: nameField
+            fieldName: "Patient Name"
             anchors.top: newUserTitleArea.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
             anchors.topMargin: height * 0.8
-
-            Item {
-                id: nameLabelArea
-                width: parent.width / 3
-                height: parent.height
-                anchors.left: parent.left
-
-                Text {
-                    id: nameLabel
-                    width: parent.width
-                    height: parent.height
-                    anchors.left: parent.left
-                    anchors.leftMargin: width * 0.1
-                    verticalAlignment: Text.AlignVCenter
-                    text: qsTr("Patient Name")
-                    font.pixelSize: 12
-                }
-            }
-
-            Rectangle {
-                id: nameTextArea
-                width: parent.width - nameLabelArea.width
-                height: parent.height
-                anchors.right: parent.right
-                color: "#ffffff"
-
-                TextInput {
-                    id: nameValue
-                    width: parent.width
-                    height: parent.height
-                    anchors.left: parent.left
-                    anchors.leftMargin: width * 0.08
-                    verticalAlignment: Text.AlignVCenter
-                    maximumLength: 31
-                    font.pixelSize: 12
-                    KeyNavigation.tab: surnameValue
-                    text: qsTr("")
-                }
-            }
+            KeyNavigation.tab: surnameField.fieldValue
         }
 
-        Item {
-            id: patientSurname
-            width: parent.width * 0.9
-            height: newUserTitleArea.height * 0.8
-            anchors.top: patientName.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: height * 0.3
-
-            Item {
-                id: surnameLabelArea
-                width: parent.width / 3
-                height: parent.height
-                anchors.left: parent.left
-
-                Text {
-                    id: surnameLabel
-                    width: parent.width
-                    height: parent.height
-                    anchors.left: parent.left
-                    anchors.leftMargin: width * 0.1
-                    verticalAlignment: Text.AlignVCenter
-                    text: qsTr("Patient Surname")
-                    font.pixelSize: 12
-                }
-            }
-
-            Rectangle {
-                id: surnameTextArea
-                width: parent.width - surnameLabelArea.width
-                height: parent.height
-                anchors.right: parent.right
-                color: "#ffffff"
-
-                TextInput {
-                    id: surnameValue
-                    width: parent.width
-                    height: parent.height
-                    anchors.left: parent.left
-                    anchors.leftMargin: width * 0.08
-                    verticalAlignment: Text.AlignVCenter
-                    maximumLength: 31
-                    font.pixelSize: 12
-                    KeyNavigation.tab: dobValue
-                    text: qsTr("")
-                }
-            }
+        //Surname
+        NewPatientField {
+            id: surnameField
+            fieldName: "Patient Surname"
+            anchors.top: nameField.bottom
+            KeyNavigation.tab: yearValue
         }
 
-        Item {
-            id: patientDob
-            width: parent.width * 0.9
-            height: newUserTitleArea.height * 0.8
-            anchors.top: patientSurname.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: height * 0.3
+        //Date of Birth
+        NewPatientField {
+            id: dobField
+            fieldName: "Date of Birth"
+            anchors.top: surnameField.bottom
+            valueArea.color: "transparent"
 
             Item {
-                id: dobLabelArea
-                width: parent.width / 3
-                height: parent.height
-                anchors.left: parent.left
-
-                Text {
-                    id: dobLabel
-                    width: parent.width
-                    height: parent.height
-                    anchors.left: parent.left
-                    anchors.leftMargin: width * 0.1
-                    verticalAlignment: Text.AlignVCenter
-                    text: qsTr("Date of Birth")
-                    font.pixelSize: 12
-                }
-            }
-
-            Rectangle {
                 id: dobTextArea
-                width: parent.width - surnameLabelArea.width
-                height: parent.height
-                anchors.right: parent.right
-                color: "#ffffff"
-
-                TextInput {
-                    id: dobValue
-                    width: parent.width
+                width: dobField.valueArea.width
+                height: dobField.valueArea.height
+                anchors.right: dobField.valueArea.right
+                //Year
+                Rectangle {
+                    id: yearTextArea
+                    width: parent.width * 0.4
                     height: parent.height
                     anchors.left: parent.left
-                    anchors.leftMargin: width * 0.08
-                    verticalAlignment: Text.AlignVCenter
-                    maximumLength: 31
-                    font.pixelSize: 12
-                    KeyNavigation.tab: emailValue
-                    text: qsTr("")
+                    color: "#ffffff"
+                    TextInput {
+                        id: yearValue
+                        width: parent.width
+                        height: parent.height
+                        anchors.left: parent.left
+                        anchors.leftMargin: width * 0.08
+                        verticalAlignment: Text.AlignVCenter
+                        maximumLength: 4
+                        font.pixelSize: 12
+                        KeyNavigation.tab: monthValue
+                        text: qsTr("")
+                    }
+                }
+                //Month
+                Rectangle {
+                    id: monthTextArea
+                    width: parent.width / 4
+                    height: parent.height
+                    anchors.left: yearTextArea.right
+                    anchors.leftMargin: (parent.width - yearTextArea.width - (dayTextArea.width * 2)) / 2
+                    color: "#ffffff"
+                    TextInput {
+                        id: monthValue
+                        width: parent.width
+                        height: parent.height
+                        anchors.left: parent.left
+                        anchors.leftMargin: width * 0.08
+                        verticalAlignment: Text.AlignVCenter
+                        maximumLength: 2
+                        font.pixelSize: 12
+                        KeyNavigation.tab: dayValue
+                        text: qsTr("")
+                    }
+                }
+                //Day
+                Rectangle {
+                    id: dayTextArea
+                    width: parent.width / 4
+                    height: parent.height
+                    anchors.right: parent.right
+                    color: "#ffffff"
+                    TextInput {
+                        id: dayValue
+                        width: parent.width
+                        height: parent.height
+                        anchors.left: parent.left
+                        anchors.leftMargin: width * 0.08
+                        verticalAlignment: Text.AlignVCenter
+                        maximumLength: 2
+                        font.pixelSize: 12
+                        KeyNavigation.tab: emailField.fieldValue
+                        text: qsTr("")
+                    }
                 }
             }
         }
 
+        //Email
+        NewPatientField {
+            id: emailField
+            fieldName: "Patient Email"
+            anchors.top: dobField.bottom
+            KeyNavigation.tab: coorField.fieldValue
+        }
+
+        //Address Title
         Item {
-            id: patientEmail
-            width: parent.width * 0.9
-            height: newUserTitleArea.height * 0.8
-            anchors.top: patientDob.bottom
+            id: addressTitleArea
+            width: newUserTitleArea.width
+            height: newUserTitleArea.height * 0.9
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: height * 0.3
+            anchors.top: emailField.bottom
+            anchors.topMargin: height * 0.5
 
-            Item {
-                id: emailLabelArea
-                width: parent.width / 3
-                height: parent.height
+            Text {
+                text: qsTr("Patient Address")
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
-
-                Text {
-                    id: emailLabel
-                    width: parent.width
-                    height: parent.height
-                    anchors.left: parent.left
-                    anchors.leftMargin: width * 0.1
-                    verticalAlignment: Text.AlignVCenter
-                    text: qsTr("Patient Email")
-                    font.pixelSize: 12
-                }
+                font.pixelSize: 16
             }
 
-            Rectangle {
-                id: emailTextArea
-                width: parent.width - emailLabelArea.width
-                height: parent.height
-                anchors.right: parent.right
-                color: "#ffffff"
-
-                TextInput {
-                    id: emailValue
-                    width: parent.width
-                    height: parent.height
-                    anchors.left: parent.left
-                    anchors.leftMargin: width * 0.08
-                    verticalAlignment: Text.AlignVCenter
-                    maximumLength: 31
-                    font.pixelSize: 12
-                    text: qsTr("")
-                }
+            Rectangle{
+                width: parent.width
+                height: 1
+                border.color: "black"
+                border.width: 1
+                anchors.bottom: parent.bottom
+                color: "transparent"
             }
+        }
+
+        //Coordinates
+        NewPatientField {
+            id: coorField
+            fieldName: "Coordinates"
+            anchors.top: addressTitleArea.bottom
+            KeyNavigation.tab: streetField.fieldValue
+            anchors.topMargin: height * 0.8
+        }
+
+        //Street
+        NewPatientField {
+            id: streetField
+            fieldName: "Street"
+            anchors.top: coorField.bottom
+            KeyNavigation.tab: cityField.fieldValue
+        }
+
+        //City
+        NewPatientField {
+            id: cityField
+            fieldName: "City"
+            anchors.top: streetField.bottom
+            KeyNavigation.tab: zipField.fieldValue
+        }
+
+        //Zip
+        NewPatientField {
+            id: zipField
+            fieldName: "Zip Code"
+            anchors.top: cityField.bottom
         }
     }
 }

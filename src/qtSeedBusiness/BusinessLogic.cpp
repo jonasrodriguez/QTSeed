@@ -33,7 +33,9 @@ bool BusinessLogic::LoginUser(QString user, QString pass) {
     return false;
 }
 
-void BusinessLogic::GetPatientsList() { comms_->GetPatientsList(); }
+void BusinessLogic::GetPatientsList() {
+  comms_->GetPatientsList();
+}
 
 void BusinessLogic::ProcessPatients(QVector<Patient> patients, QString errors) {
   if (!errors.isEmpty()) {
@@ -45,6 +47,9 @@ void BusinessLogic::ProcessPatients(QVector<Patient> patients, QString errors) {
 }
 
 void BusinessLogic::SaveNewPatient(Patient patient) {
-  qDebug() << "BusinessLogic::SaveNewPatient";
   comms_->PostPatient(patient);
+}
+
+void BusinessLogic::DeletePatient(int patientId) {
+  comms_->DeletePatient(patientId);
 }

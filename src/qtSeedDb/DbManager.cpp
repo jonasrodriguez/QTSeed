@@ -53,7 +53,7 @@ void DbManager::CreateUsersTable() {
   if (!query.exec())
     qDebug() << "DB Error!! Create Users table: " << query.lastError();
 
-  AddUser("admin", "admin");
+  AddUser("Systelab", "Systelab");
 }
 QString DbManager::EncryptPass(QString pass) {
   // Need salty salt :D

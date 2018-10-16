@@ -7,6 +7,12 @@ Rectangle {
     color: "#ff5500"
     border.width: 2
 
+    MouseArea {
+        anchors.fill: parent
+        onPressAndHold: patientList.deletePatient(idText.text);
+    }
+
+    //ID
     Rectangle {
         id: idArea
         width: parent.width * 0.1
@@ -36,10 +42,11 @@ Rectangle {
                 id: idText
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 5
-                text: "1234"
+                text: model.id
             }
         }
     }
+    //Patient Name
     Rectangle {
         id: nameArea
         width: parent.width * 0.3
@@ -74,6 +81,7 @@ Rectangle {
             }
         }
     }
+    //Patient Surname
     Rectangle {
         id: surnameArea
         width: parent.width * 0.4
@@ -108,6 +116,7 @@ Rectangle {
             }
         }
     }
+    //Patient Date of Birth
     Rectangle {
         id: doblArea
         width: parent.width * 0.3
@@ -143,6 +152,7 @@ Rectangle {
             }
         }
     }
+    //Patient Email
     Rectangle {
         id: emailArea
         width: parent.width * 0.4

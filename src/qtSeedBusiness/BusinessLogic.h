@@ -14,6 +14,7 @@ class BusinessLogic : public IBusiness {
 
   bool LoginUser(QString user, QString pass) override;
   void SaveNewPatient(Patient patient) override;
+  void DeletePatient(int patientId) override;
 
  protected:
   void GetPatientsList();

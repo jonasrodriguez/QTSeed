@@ -45,14 +45,14 @@ void Comms::ProcessGetPatientsList(QNetworkReply* reply) {
 }
 
 void Comms::PostPatient(Patient patient) {
-    qDebug() << "Comms::PostPatient";
-  QJsonDocument patientDocument = CreateJsonPatient(patient);
+  qDebug() << "Comms::PostPatient";
   QNetworkAccessManager* manager = new QNetworkAccessManager();
-
+  QByteArray patientJson = CreateJsonPatient(patient);
   QNetworkRequest request;
   request.setUrl(QUrl(ip_ + SeedEndpoint));
   request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
-  manager->post(request, patientDocument.toJson());
+//  request.setHeader(QNetworkRequest::ContentLengthHeader,QByteArray::number(patientJson.size()));
+  manager->post(request, patientJson);
   QObject::connect(
       manager, &QNetworkAccessManager::finished,
       [&](QNetworkReply* reply) { ProcessPostPatient(reply); });
@@ -67,6 +67,30 @@ void Comms::ProcessPostPatient(QNetworkReply* reply) {
     qDebug() << errors;
     return;
   }
+  else GetPatientsList();
+}
+
+void Comms::DeletePatient(int patientId) {
+  qDebug() << "Comms::DeletePatient";
+  QNetworkAccessManager* manager = new QNetworkAccessManager();
+  QNetworkRequest request;
+  request.setUrl(QUrl(ip_ + SeedEndpoint + "/" + QString::number(patientId)));
+  manager->deleteResource(request);
+  QObject::connect(
+      manager, &QNetworkAccessManager::finished,
+      [&](QNetworkReply* reply) { ProcessDeletePatient(reply); });
+}
+
+void Comms::ProcessDeletePatient(QNetworkReply *reply) {
+  qDebug() << "Comms::ProcessDeletePatient";
+  QString errors("");
+
+  if (reply->error() != QNetworkReply::NoError) {
+    errors = reply->errorString();
+    qDebug() << errors;
+    return;
+  }
+  else GetPatientsList();
 }
 
 Patient Comms::ReadJsonPatient(QJsonObject obj) {
@@ -89,7 +113,7 @@ Patient Comms::ReadJsonPatient(QJsonObject obj) {
   return patient;
 }
 
-QJsonDocument Comms::CreateJsonPatient(Patient patient) {
+QByteArray Comms::CreateJsonPatient(Patient patient) {
 
   QJsonObject patientObject;
   patientObject.insert(json_name, patient.name);
@@ -105,6 +129,6 @@ QJsonDocument Comms::CreateJsonPatient(Patient patient) {
   patientObject.insert(json_address, addressObject);
 
   QJsonDocument patientDocument(patientObject);
-  qDebug() << patientDocument;
-  return patientDocument;
+
+  return patientDocument.toJson();
 }

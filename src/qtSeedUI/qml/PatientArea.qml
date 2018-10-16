@@ -41,11 +41,6 @@ Item {
             delegate: delegate
         }
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: patientList.addTestRow();
-        }
-
         Component {
             id: delegate
             PatientDelegate {
@@ -71,23 +66,20 @@ Item {
              anchors.fill: parent
              onClicked: {
                  //Set inactive to reset the dialog in case it was open previously...
-//                 patientDialogLoad.active = false
-//                 patientDialogLoad.active = true
-//                 patientDialogLoad.item.open()
-                 newPatientDlg.saveNewPatient("nameValue.text", "surnameValue.text", "dobValue.text", "emailValue.text")
+                 patientDialogLoad.active = false
+                 patientDialogLoad.active = true
+                 patientDialogLoad.item.open()
              }
          }
 
          Component {
-             id: diaComp
-             NewPatient {
-                id: newPatientDlg
-             }
+             id: dlgComp
+             NewPatient {}
          }
 
          Loader {
              id: patientDialogLoad
-             sourceComponent: diaComp
+             sourceComponent: dlgComp
              active: false
          }
     }
