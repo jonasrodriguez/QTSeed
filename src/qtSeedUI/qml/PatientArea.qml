@@ -28,20 +28,52 @@ Item {
         //Add user button
         Rectangle {
             id: addUserButton
-            width: parent.height * 0.7
-            height: width
+            width: parent.width * 0.15
+            height: width / 4
             color: "#f47023"
-            radius: width * 0.5
+            radius: 5
             anchors.right: parent.right
-            anchors.top: parent.top
-            Image {
-                height: parent.height * 0.6
+            anchors.bottom: parent.bottom
+            anchors.rightMargin: height / 5
+
+            Rectangle {
+                height: parent.height * 0.7
+                width: height
+                anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.horizontalCenterOffset: 2
-                fillMode: Image.PreserveAspectFit
-                source: "res/addUserIcon.png"
-             }
+                anchors.leftMargin: width / 4
+                radius: 5
+                color: "white"
+
+                Rectangle {
+                    height: 2
+                    width: parent.width * 0.7
+                    anchors.left: parent.left
+                    anchors.centerIn: parent
+                    color: "transparent"
+                    border.color: "#f47023"
+                    border.width: 2
+                }
+                Rectangle {
+                    height: parent.width * 0.7
+                    width: 2
+                    anchors.top: parent.top
+                    anchors.centerIn: parent
+                    color: "transparent"
+                    border.color: "#f47023"
+                    border.width: 2
+                }
+                Text {
+                    anchors.left: parent.right
+                    anchors.leftMargin: parent.width / 2
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: "Add User"
+                    color: "white"
+                    font.family: "PT Mono"
+                    font.pixelSize: 12
+                    font.bold: true
+                }
+            }
 
             MouseArea {
                 anchors.fill: parent
