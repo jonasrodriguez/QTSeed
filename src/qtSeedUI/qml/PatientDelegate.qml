@@ -2,189 +2,107 @@ import QtQuick 2.0
 
 Rectangle {
     id: delegateArea
-    width: patientListArea.width
-    height: 70
-    color: "#ff5500"
-    border.width: 2
+    width: patientListArea.width * 0.99
+    height: patientListArea.height / 7
+    anchors.horizontalCenter: parent.horizontalCenter
+    color: "#282828"
+    border.width: 1
 
     MouseArea {
         anchors.fill: parent
-        onPressAndHold: patientList.deletePatient(idText.text);
+        onPressAndHold: patientList.deletePatient(idArea.fieldValue);
     }
 
-    //ID
-    Rectangle {
+    Loader {
         id: idArea
-        width: parent.width * 0.1
-        height: parent.height * 0.3
+        property string fieldName: "ID"
+        property string fieldValue: model.id
+        width: parent.width * 0.07
         anchors.left: parent.left
-        color: "transparent"
-        Rectangle {
-            id: idLabelArea
-            width: parent.width / 3
-            height: parent.height
-            border.color: "black"
-            color: "transparent"
-            Text {
-                id: idLabel
-                anchors.verticalCenter: parent.verticalCenter
-                text: "ID:"
-            }
-        }
-        Rectangle {
-            id: idTextArea
-            width: parent.width / 2
-            height: parent.height
-            border.color: "black"
-            color: "transparent"
-            anchors.left: idLabelArea.right
-            Text{
-                id: idText
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.leftMargin: 5
-                text: model.id
-            }
-        }
+        anchors.top: parent.top
+        anchors.leftMargin: height / 3
+        anchors.topMargin:  height / 3
+        sourceComponent: delegateComponent
     }
-    //Patient Name
-    Rectangle {
+
+    Loader {
         id: nameArea
+        property string fieldName: "Patient Name"
+        property string fieldValue: model.name
         width: parent.width * 0.3
-        height: parent.height * 0.3
         anchors.left: idArea.right
-        border.color: "black"
-        color: "transparent"
-        Rectangle {
-            id: nameLabelArea
-            width: parent.width / 3
-            height: parent.height
-            border.color: "black"
-            color: "transparent"
-            Text {
-                id: nameLabel
-                anchors.verticalCenter: parent.verticalCenter
-                text: "Patient Name:"
-            }
-        }
-        Rectangle {
-            id: nameTextArea
-            width: parent.width - nameLabelArea.width
-            height: parent.height
-            border.color: "black"
-            color: "transparent"
-            anchors.left: nameLabelArea.right
-            Text{
-                id: nameText
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.leftMargin: 5
-                text: model.name
-            }
-        }
+        anchors.top: idArea.top
+        anchors.leftMargin: implicitHeight / 3
+        sourceComponent: delegateComponent
     }
-    //Patient Surname
-    Rectangle {
+
+    Loader {
         id: surnameArea
-        width: parent.width * 0.4
-        height: parent.height * 0.3
-        anchors.left: nameArea.right
-        border.color: "black"
-        color: "transparent"
-        Rectangle {
-            id: surnameLabelArea
-            width: parent.width / 3
-            height: parent.height
-            border.color: "black"
-            color: "transparent"
-            Text {
-                id: surnameLabel
-                anchors.verticalCenter: parent.verticalCenter
-                text: "Patient Surname:"
-            }
-        }
-        Rectangle {
-            id: surnameTextArea
-            width: parent.width - surnameLabelArea.width
-            height: parent.height
-            border.color: "black"
-            color: "transparent"
-            anchors.left: surnameLabelArea.right
-            Text{
-                id: surnameText
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.leftMargin: 5
-                text: model.surname
-            }
-        }
+        property string fieldName: "Patient Surname"
+        property string fieldValue: model.surname
+        anchors.left: nameArea.right;
+        anchors.top: idArea.top
+        anchors.leftMargin: implicitHeight / 3
+        sourceComponent: delegateComponent
     }
-    //Patient Date of Birth
-    Rectangle {
+
+    Loader {
         id: doblArea
+        property string fieldName: "Date of Birth"
+        property string fieldValue: model.dob
         width: parent.width * 0.3
-        height: parent.height * 0.3
         anchors.left: nameArea.left;
         anchors.top: nameArea.bottom;
-        border.color: "black"
-        color: "transparent"
-        Rectangle {
-            id: dobLabelArea
-            width: parent.width / 3
-            height: parent.height
-            border.color: "black"
-            color: "transparent"
-            Text {
-                id: dobLabel
-                anchors.verticalCenter: parent.verticalCenter
-                text: "Patient DoB:"
-            }
-        }
-        Rectangle {
-            id: dobTextArea
-            width: parent.width  - dobLabelArea.width
-            height: parent.height
-            border.color: "black"
-            color: "transparent"
-            anchors.left: dobLabelArea.right
-            Text{
-                id: doblText
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.leftMargin: 5
-                text: model.dob
-            }
-        }
+        anchors.topMargin: implicitHeight / 5
+        sourceComponent: delegateComponent
     }
-    //Patient Email
-    Rectangle {
+
+    Loader {
         id: emailArea
-        width: parent.width * 0.4
-        height: parent.height * 0.3
+        property string fieldName: "Patient Email"
+        property string fieldValue: model.email
         anchors.left: surnameArea.left;
-        anchors.top: surnameArea.bottom;
-        border.color: "black"
-        color: "transparent"
-        Rectangle {
-            id: emailLabelArea
-            width: parent.width / 3
-            height: parent.height
-            border.color: "black"
-            color: "transparent"
-            Text {
-                id: emailLabel
-                anchors.verticalCenter: parent.verticalCenter
-                text: "Patient Email:"
+        anchors.top: doblArea.top;
+        sourceComponent: delegateComponent
+    }
+
+    Component {
+        id: delegateComponent
+        Item {
+            width: delegateArea.width * 0.4
+            height: delegateArea.height * 0.3
+
+            Item {
+                id: labelArea
+                width: parent.width / 3
+                height: parent.height
+
+                Text {
+                    id: labelText
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: fieldName
+                    font.family: "PT Mono"
+                    font.bold: true
+                    font.pixelSize: 12
+                    color: "#96cb2d"
+                }
             }
-        }
-        Rectangle {
-            id: emailTextArea
-            width: parent.width  - emailLabelArea.width
-            height: parent.height
-            border.color: "black"
-            color: "transparent"
-            anchors.left: emailLabelArea.right
-            Text{
-                id: emailText
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.leftMargin: 5
-                text: model.email
+            Rectangle {
+                id: valueArea
+                width: parent.width - labelArea.width
+                height: parent.height
+                color: "transparent"
+                anchors.left: labelArea.right
+                Text{
+                    id: valueText
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: height / 2
+                    text: fieldValue
+                    font.family: "PT Mono"
+                    font.pixelSize: 12
+                    color: "#cfc56a"
+                }
             }
         }
     }

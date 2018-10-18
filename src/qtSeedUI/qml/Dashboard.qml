@@ -9,7 +9,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: parent.width * 0.18
-        color: "#00a3e2"
+        color: "#097bed"
 
         Item {
             id: sideBarImage
@@ -33,7 +33,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         width: parent.width * 0.82
-        color: "#ffff7f"
+        color: "#303030"
 
         Loader{
             anchors.fill: parent

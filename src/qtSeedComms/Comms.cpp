@@ -6,7 +6,7 @@ void Comms::SetCommsAddress(QString ip, QString port) {
   ip_ = ip + ":" + port;
 };
 
-void Comms::GetPatientsList() {
+void Comms::GetPatientList() {
   QString errors;
   QTimer get_timer;
   QVector<Patient> patients;
@@ -67,7 +67,7 @@ void Comms::ProcessPostPatient(QNetworkReply* reply) {
     qDebug() << errors;
     return;
   }
-  else GetPatientsList();
+  else GetPatientList();
 }
 
 void Comms::DeletePatient(int patientId) {
@@ -90,7 +90,7 @@ void Comms::ProcessDeletePatient(QNetworkReply *reply) {
     qDebug() << errors;
     return;
   }
-  else GetPatientsList();
+  else GetPatientList();
 }
 
 Patient Comms::ReadJsonPatient(QJsonObject obj) {

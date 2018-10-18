@@ -12,7 +12,7 @@ class Comms : public IComms {
   ~Comms() = default;
 
   void SetCommsAddress(QString, QString) override;
-  void GetPatientsList() override;
+  void GetPatientList() override;
   void PostPatient(Patient patient) override;
   void DeletePatient(int patientId) override;
 

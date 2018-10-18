@@ -16,7 +16,7 @@ void BusinessLogic::StartUp() {
   db_->StartUp();
   comms_->SetCommsAddress("http://127.0.0.1", "8080");
 
-  GetPatientsList();
+  GetPatientList();
 }
 
 void BusinessLogic::ShutDown() {
@@ -33,8 +33,8 @@ bool BusinessLogic::LoginUser(QString user, QString pass) {
     return false;
 }
 
-void BusinessLogic::GetPatientsList() {
-  comms_->GetPatientsList();
+void BusinessLogic::GetPatientList() {
+  comms_->GetPatientList();
 }
 
 void BusinessLogic::ProcessPatients(QVector<Patient> patients, QString errors) {

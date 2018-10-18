@@ -13,11 +13,9 @@ class BusinessLogic : public IBusiness {
   void ShutDown() override;
 
   bool LoginUser(QString user, QString pass) override;
+  void GetPatientList() override;
   void SaveNewPatient(Patient patient) override;
   void DeletePatient(int patientId) override;
-
- protected:
-  void GetPatientsList();
 
  public slots:
   void ProcessPatients(QVector<Patient> patients, QString errors) override;

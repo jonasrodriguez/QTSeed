@@ -11,7 +11,7 @@ class IComms : public QObject {
   virtual ~IComms() = default;
 
   virtual void SetCommsAddress(QString ip, QString port) = 0;
-  virtual void GetPatientsList() = 0;
+  virtual void GetPatientList() = 0;
   virtual void PostPatient(Patient patient) = 0;
   virtual void DeletePatient(int patientId) = 0;
 
