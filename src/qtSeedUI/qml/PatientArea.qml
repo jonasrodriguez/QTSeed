@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.4
+import QtQuick.Shapes 1.0
 
 Item {
     id: patientsArea
@@ -23,79 +24,7 @@ Item {
             font.pixelSize: 30
             font.family: "Monospace"
             color: "white"
-        }
-
-        //Add user button
-        Rectangle {
-            id: addUserButton
-            width: parent.width * 0.15
-            height: width / 4
-            color: "#f47023"
-            radius: 5
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.rightMargin: height / 5
-
-            Rectangle {
-                height: parent.height * 0.7
-                width: height
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.leftMargin: width / 4
-                radius: 5
-                color: "white"
-
-                Rectangle {
-                    height: 2
-                    width: parent.width * 0.7
-                    anchors.left: parent.left
-                    anchors.centerIn: parent
-                    color: "transparent"
-                    border.color: "#f47023"
-                    border.width: 2
-                }
-                Rectangle {
-                    height: parent.width * 0.7
-                    width: 2
-                    anchors.top: parent.top
-                    anchors.centerIn: parent
-                    color: "transparent"
-                    border.color: "#f47023"
-                    border.width: 2
-                }
-                Text {
-                    anchors.left: parent.right
-                    anchors.leftMargin: parent.width / 2
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "Add User"
-                    color: "white"
-                    font.family: "PT Mono"
-                    font.pixelSize: 12
-                    font.bold: true
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    //Set inactive to reset the dialog in case it was open previously...
-                    patientDialogLoad.active = false
-                    patientDialogLoad.active = true
-                    patientDialogLoad.item.open()
-                 }
-             }
-
-             Component {
-                 id: dlgComp
-                 NewPatient {}
-             }
-
-             Loader {
-                 id: patientDialogLoad
-                 sourceComponent: dlgComp
-                 active: false
-             }
-        }
+        }        
     }
 
     //Patient List
@@ -127,6 +56,64 @@ Item {
             PatientDelegate {
             }
         }
+    }
+
+    //Add user button
+    Rectangle {
+        id: addUserButton
+        width: refreshButton.width
+        height: width
+        color: "#f47023"
+        radius: 5
+        anchors.left: refreshButton.left
+        anchors.bottom: refreshButton.top
+        anchors.bottomMargin: height / 5
+
+        Rectangle {
+            height: parent.height * 0.7
+            width: height
+            anchors.left: parent.left
+            anchors.centerIn: parent
+            radius: 5
+            color: "white"
+
+            Shape {
+                id: canvas
+                anchors.fill: parent
+                ShapePath {
+                    strokeColor: "#f47023"
+                    strokeWidth: 3
+                    startX: canvas.width * 0.2
+                    startY: (canvas.height / 2)
+                    PathLine {x:canvas.width / 2    ; y:canvas.height / 2}
+                    PathLine {x:canvas.width / 2    ; y:canvas.height * 0.2}
+                    PathLine {x:canvas.width / 2    ; y:canvas.height * 0.8}
+                    PathLine {x:canvas.width / 2    ; y:canvas.height / 2}
+                    PathLine {x:canvas.width * 0.8  ; y:canvas.height / 2}
+                }
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                //Set inactive to reset the dialog in case it was open previously...
+                patientDialogLoad.active = false
+                patientDialogLoad.active = true
+                patientDialogLoad.item.open()
+             }
+         }
+
+         Component {
+             id: dlgComp
+             NewPatient {}
+         }
+
+         Loader {
+             id: patientDialogLoad
+             sourceComponent: dlgComp
+             active: false
+         }
     }
 
     //Refresh Button
