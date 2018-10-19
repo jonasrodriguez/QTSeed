@@ -34,6 +34,7 @@ Dialog {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: 20
+                font.family: "PT Mono"
             }
 
             Rectangle{
@@ -161,6 +162,7 @@ Dialog {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 font.pixelSize: 16
+                font.family: "PT Mono"
             }
 
             Rectangle{

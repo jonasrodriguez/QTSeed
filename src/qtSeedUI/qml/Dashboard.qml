@@ -11,19 +11,8 @@ Rectangle {
         width: parent.width * 0.18
         color: "#097bed"
 
-        Item {
-            id: sideBarImage
-            width: parent.width * 0.9
-            height: parent.height * 0.2
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
-            anchors.topMargin: 10
+        SideBar {
 
-            Image {
-                anchors.fill: parent
-                fillMode: Image.PreserveAspectFit
-                source: "res/werfenIcon.png"
-            }
         }
     }
 
@@ -31,13 +20,27 @@ Rectangle {
         id: mainArea
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        width: parent.width * 0.82
+        anchors.left: sideBar.right
+        width: parent.width - sideBar.width
         color: "#303030"
 
         Loader{
+            id: dashLoader
             anchors.fill: parent
-            source: "PatientArea.qml"
+//            source: "PatientArea.qml"
+            source: loginLogic.loginSuccess ? "PatientArea.qml" : "Login.qml"
+
+//            onSourceChanged: animation.running = true
+
+//            NumberAnimation {
+//                id: animation
+//                target: dashLoader.item
+//                property: "x"
+//                from: 0
+//                to: dashLoader.item.width
+//                duration: 1000
+//                easing.type: Easing.InExpo
+//            }
         }
     }
 }

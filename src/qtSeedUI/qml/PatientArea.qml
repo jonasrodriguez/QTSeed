@@ -22,7 +22,7 @@ Item {
             id: patientTitleText
             text: qsTr("Patient List")
             font.pixelSize: 30
-            font.family: "Monospace"
+            font.family: "PT Mono"
             color: "white"
         }        
     }
@@ -64,35 +64,38 @@ Item {
         width: refreshButton.width
         height: width
         color: "#f47023"
-        radius: 5
+        radius: width * 0.5
         anchors.left: refreshButton.left
         anchors.bottom: refreshButton.top
         anchors.bottomMargin: height / 5
 
-        Rectangle {
-            height: parent.height * 0.7
+        Shape {
+            id: canvas
+            height: parent.height * 0.8
             width: height
-            anchors.left: parent.left
-            anchors.centerIn: parent
-            radius: 5
-            color: "white"
-
-            Shape {
-                id: canvas
-                anchors.fill: parent
-                ShapePath {
-                    strokeColor: "#f47023"
-                    strokeWidth: 3
-                    startX: canvas.width * 0.2
-                    startY: (canvas.height / 2)
-                    PathLine {x:canvas.width / 2    ; y:canvas.height / 2}
-                    PathLine {x:canvas.width / 2    ; y:canvas.height * 0.2}
-                    PathLine {x:canvas.width / 2    ; y:canvas.height * 0.8}
-                    PathLine {x:canvas.width / 2    ; y:canvas.height / 2}
-                    PathLine {x:canvas.width * 0.8  ; y:canvas.height / 2}
-                }
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            ShapePath {
+                strokeColor: "white"
+                strokeWidth: 3
+                startX: canvas.width * 0.2
+                startY: (canvas.height / 2)
+                PathLine {x:canvas.width / 2    ; y:canvas.height / 2}
+                PathLine {x:canvas.width / 2    ; y:canvas.height * 0.2}
+                PathLine {x:canvas.width / 2    ; y:canvas.height * 0.8}
+                PathLine {x:canvas.width / 2    ; y:canvas.height / 2}
+                PathLine {x:canvas.width * 0.8  ; y:canvas.height / 2}
             }
         }
+//        Rectangle {
+//            height: parent.height * 0.7
+//            width: height
+//            anchors.left: parent.left
+//            anchors.centerIn: parent
+//            radius: 5
+//            color: "white"
+
+//        }
 
         MouseArea {
             anchors.fill: parent

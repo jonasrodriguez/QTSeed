@@ -12,16 +12,19 @@ class IBusiness : public QObject {
 
   virtual void StartUp() = 0;
   virtual void ShutDown() = 0;
-  virtual bool LoginUser(QString user, QString password) = 0;
+  virtual void LoginUser(QString user, QString password) = 0;
   virtual void GetPatientList() = 0;
   virtual void SaveNewPatient(Patient patient) = 0;
   virtual void DeletePatient(int patientId) = 0;
 
  signals:
   void SendPatientList(QVector<Patient> patients);
+  void SendLoginStatus(bool loginStatus);
 
  public slots:
-  virtual void ProcessPatients(QVector<Patient> patients, QString errors) = 0;
+  virtual void ProcessLoginSuccess(QString user) = 0;
+  virtual void ProcessPatients(QVector<Patient> patients) = 0;
+  virtual void ProcessCommsError(int errorCode, QString errorSummary) = 0;
 };
 
 #endif  // IBUSINESS_H

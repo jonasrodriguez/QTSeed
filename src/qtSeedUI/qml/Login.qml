@@ -7,21 +7,25 @@ Rectangle{
 
     Item {
         id: idItemLogin
-        width: parent.width / 2
+        width: mainArea.width / 3
+        height: width / 2
         anchors.centerIn: parent
-        anchors.verticalCenterOffset: -parent.height / 4
+        anchors.verticalCenterOffset: -parent.height / 5
+
+        Component.onCompleted: idUsernameTextField.forceActiveFocus()
 
         ColumnLayout {
             id: idLoginColumn
-            anchors.fill: parent
-            anchors.margins: 3
+            width: parent.width
+            anchors.top: parent.top
             spacing: 3
+            Keys.onPressed: if (event.key === Qt.Key_Return) { loginLogic.buttonLogin(idUsernameTextField.text, idPasswordTextField.text) }
 
             TextField {
                 id: idUsernameTextField
                 Layout.fillWidth: true
                 placeholderText: "User Name"
-                KeyNavigation.tab: idPasswordTextField                
+                KeyNavigation.tab: idPasswordTextField
             }
 
             TextField {
@@ -29,8 +33,7 @@ Rectangle{
                 Layout.fillWidth: true
                 placeholderText: "Password"
                 echoMode: TextInput.Password
-                Keys.onPressed: if (event.key === Qt.Key_Return) { loginLogic.buttonLogin(idUsernameTextField.text, idPasswordTextField.text) }
-                KeyNavigation.tab: idBtnLogin                
+                KeyNavigation.tab: idBtnLogin
             }
 
             Button {
@@ -38,9 +41,23 @@ Rectangle{
                 Layout.fillWidth: true
                 text: "Login"
                 KeyNavigation.tab: idUsernameTextField
-                Keys.onPressed: if (event.key === Qt.Key_Return) { loginLogic.buttonLogin(idUsernameTextField.text, idPasswordTextField.text) }
                 onClicked: loginLogic.buttonLogin(idUsernameTextField.text, idPasswordTextField.text);
             }
+        }
+    }
+
+    Item {
+        id: errorMsgArea
+        height: width / 2
+        width: idItemLogin.width
+        anchors.top: idItemLogin.bottom
+        anchors.horizontalCenter: idItemLogin.horizontalCenter
+        Text {
+            id: errorMsg
+            text: loginLogic.loginError
+            color: "red"
+            font.family: "PT mono"
+            font.pixelSize: 14
         }
     }
 }

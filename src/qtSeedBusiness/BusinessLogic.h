@@ -12,13 +12,15 @@ class BusinessLogic : public IBusiness {
   void StartUp() override;
   void ShutDown() override;
 
-  bool LoginUser(QString user, QString pass) override;
+  void LoginUser(QString user, QString pass) override;
   void GetPatientList() override;
   void SaveNewPatient(Patient patient) override;
   void DeletePatient(int patientId) override;
 
  public slots:
-  void ProcessPatients(QVector<Patient> patients, QString errors) override;
+  void ProcessLoginSuccess(QString user) override;
+  void ProcessPatients(QVector<Patient> patients) override;
+  void ProcessCommsError(int errorCode, QString errorSummary) override;
 
  private:
   std::unique_ptr<IComms> comms_;

@@ -6,9 +6,9 @@
         <file>PatientDelegate.qml</file>
         <file>PatientArea.qml</file>
         <file>res/werfenIcon.png</file>
-        <file>res/addUserIcon.png</file>
         <file>NewPatient.qml</file>
         <file>NewPatientField.qml</file>
         <file>res/RefreshIcon.png</file>
+        <file>SideBar.qml</file>
     </qresource>
 </RCC>
