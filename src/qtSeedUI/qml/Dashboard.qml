@@ -28,7 +28,7 @@ Rectangle {
             id: dashLoader
             anchors.fill: parent
 //            source: "PatientArea.qml"
-            source: loginLogic.loginSuccess ? "PatientArea.qml" : "Login.qml"
+            source: dashboardLogic.loginSuccess ? "PatientArea.qml" : "Login.qml"
 
 //            onSourceChanged: animation.running = true
 

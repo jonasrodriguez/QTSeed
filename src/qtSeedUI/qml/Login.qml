@@ -19,7 +19,7 @@ Rectangle{
             width: parent.width
             anchors.top: parent.top
             spacing: 3
-            Keys.onPressed: if (event.key === Qt.Key_Return) { loginLogic.buttonLogin(idUsernameTextField.text, idPasswordTextField.text) }
+            Keys.onPressed: if (event.key === Qt.Key_Return) { dashboardLogic.buttonLogin(idUsernameTextField.text, idPasswordTextField.text) }
 
             TextField {
                 id: idUsernameTextField
@@ -41,7 +41,7 @@ Rectangle{
                 Layout.fillWidth: true
                 text: "Login"
                 KeyNavigation.tab: idUsernameTextField
-                onClicked: loginLogic.buttonLogin(idUsernameTextField.text, idPasswordTextField.text);
+                onClicked: dashboardLogic.buttonLogin(idUsernameTextField.text, idPasswordTextField.text);
             }
         }
     }
@@ -54,7 +54,7 @@ Rectangle{
         anchors.horizontalCenter: idItemLogin.horizontalCenter
         Text {
             id: errorMsg
-            text: loginLogic.loginError
+            text: dashboardLogic.loginError
             color: "red"
             font.family: "PT mono"
             font.pixelSize: 14

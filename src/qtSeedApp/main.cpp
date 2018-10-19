@@ -6,7 +6,6 @@
 #include "BusinessLogic.h"
 #include "Dashboard.h"
 #include "IBusiness.h"
-#include "Login.h"
 #include "PatientList.h"
 #include "NewPatientDlg.h"
 
@@ -19,9 +18,6 @@ int main(int argc, char *argv[]) {
 
   std::shared_ptr<IBusiness> business_logic(new BusinessLogic);
   business_logic->StartUp();
-
-  Login login(nullptr, business_logic);
-  engine.rootContext()->setContextProperty("loginLogic", &login);
 
   Dashboard dashboard(nullptr, business_logic);
   engine.rootContext()->setContextProperty("dashboardLogic", &dashboard);
