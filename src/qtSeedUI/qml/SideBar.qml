@@ -20,13 +20,13 @@ Item {
     }
 
     Rectangle {
-        id: sideBarContent
+        id: upperSideBarContent
         width: sideBarImage.width * 0.9
         height: width
         anchors.top: sideBarImage.bottom
         anchors.left: sideBarImage.left
         anchors.topMargin: height / 3
-        anchors.leftMargin: height * 0.1
+        anchors.leftMargin: sideBarImage.height * 0.15
         color: "transparent"
 
         ColumnLayout {
@@ -35,7 +35,7 @@ Item {
             spacing: 3
             Item {
                 Layout.fillWidth: true
-                Layout.preferredHeight: sideBarContent.height / 4
+                Layout.preferredHeight: upperSideBarContent.height / 4
                 Text {
                     text: "Home"
                     color: "white"
@@ -45,7 +45,33 @@ Item {
             }
             Item {
                 Layout.fillWidth: true
-                Layout.preferredHeight: sideBarContent.height / 4
+                Layout.preferredHeight: upperSideBarContent.height / 4
+                Text {
+                    text: "Patient List"
+                    color: "white"
+                    font.family: "PT mono"
+                    font.pixelSize: 16
+                }
+            }
+        }
+    }
+    Rectangle {
+        id: lowerSideBarContent
+        width: sideBarImage.width * 0.9
+        height: sideBarImage.height * 0.6
+        anchors.bottom: parent.bottom
+        anchors.left: sideBarImage.left
+        anchors.leftMargin: sideBarImage.height * 0.15
+
+        color: "transparent"
+
+        ColumnLayout {
+            width: parent.width
+            anchors.top: parent.top
+            spacing: 3
+            Item {
+                Layout.fillWidth: true
+                Layout.preferredHeight: lowerSideBarContent.height / 2
                 Text {
                     text: "Configuration"
                     color: "white"
@@ -55,7 +81,7 @@ Item {
             }
             Item {
                 Layout.fillWidth: true
-                Layout.preferredHeight: sideBarContent.height / 4
+                Layout.preferredHeight: lowerSideBarContent.height / 2
                 Text {
                     text: "Logout"
                     color: "white"
