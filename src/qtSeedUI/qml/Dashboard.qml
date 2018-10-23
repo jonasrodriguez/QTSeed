@@ -27,8 +27,7 @@ Rectangle {
         Loader{
             id: dashLoader
             anchors.fill: parent
-//            source: "PatientArea.qml"
-            source: dashboardLogic.loginSuccess ? "PatientArea.qml" : "Login.qml"
+            source: dashboardLogic.navigation
         }
     }
 }
