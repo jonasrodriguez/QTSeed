@@ -29,18 +29,6 @@ Rectangle {
             anchors.fill: parent
 //            source: "PatientArea.qml"
             source: dashboardLogic.loginSuccess ? "PatientArea.qml" : "Login.qml"
-
-//            onSourceChanged: animation.running = true
-
-//            NumberAnimation {
-//                id: animation
-//                target: dashLoader.item
-//                property: "x"
-//                from: 0
-//                to: dashLoader.item.width
-//                duration: 1000
-//                easing.type: Easing.InExpo
-//            }
         }
     }
 }

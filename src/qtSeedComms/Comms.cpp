@@ -12,24 +12,27 @@ void Comms::Login(QString user, QString password) {
   QNetworkAccessManager* manager = new QNetworkAccessManager();
   QNetworkRequest request;
   request.setUrl(QUrl(ip_ + SeedLoginEndpoint));
-  request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-  QByteArray loginInfo = QString("login=" + user + "&password=" + password).toLocal8Bit();
+  request.setHeader(QNetworkRequest::ContentTypeHeader,
+                    "application/x-www-form-urlencoded");
+  QByteArray loginInfo =
+      QString("login=" + user + "&password=" + password).toLocal8Bit();
   manager->post(request, loginInfo);
-  QObject::connect(
-      manager, &QNetworkAccessManager::finished,
-      [=](QNetworkReply* reply) { ProcessLogin(reply, user); });
+  QObject::connect(manager, &QNetworkAccessManager::finished,
+                   [=](QNetworkReply* reply) { ProcessLogin(reply, user); });
 }
 
-void Comms::ProcessLogin(QNetworkReply *reply, QString user) {
-    if (reply->error() != QNetworkReply::NoError) {
-      auth_ = "";
-      emit ReportCommsError(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt(),reply->errorString());
-      return;
-    }
-    auth_ = reply->rawHeader("Authorization");
-    GetPatientList();
+void Comms::ProcessLogin(QNetworkReply* reply, QString user) {
+  if (reply->error() != QNetworkReply::NoError) {
+    auth_ = "";
+    emit ReportCommsError(
+        reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt(),
+        reply->errorString());
+    return;
+  }
+  auth_ = reply->rawHeader("Authorization");
+  GetPatientList();
 
-    emit LoginSuccess(user);
+  emit LoginSuccess(user);
 }
 
 void Comms::GetPatientList() {
@@ -45,12 +48,13 @@ void Comms::GetPatientList() {
 };
 
 void Comms::ProcessGetPatientsList(QNetworkReply* reply) {
-
   QVector<Patient> patients;
   QString errors("");
 
   if (reply->error() != QNetworkReply::NoError) {
-    emit ReportCommsError(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt(),reply->errorString());
+    emit ReportCommsError(
+        reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt(),
+        reply->errorString());
     return;
   }
 
@@ -70,12 +74,11 @@ void Comms::PostPatient(Patient patient) {
   QByteArray patientJson = CreateJsonPatient(patient);
   QNetworkRequest request;
   request.setUrl(QUrl(ip_ + SeedEndpoint));
-  request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
+  request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
   request.setRawHeader("Authorization", auth_);
   manager->post(request, patientJson);
-  QObject::connect(
-      manager, &QNetworkAccessManager::finished,
-      [&](QNetworkReply* reply) { ProcessPostPatient(reply); });
+  QObject::connect(manager, &QNetworkAccessManager::finished,
+                   [&](QNetworkReply* reply) { ProcessPostPatient(reply); });
 }
 
 void Comms::ProcessPostPatient(QNetworkReply* reply) {
@@ -83,10 +86,12 @@ void Comms::ProcessPostPatient(QNetworkReply* reply) {
   QString errors("");
 
   if (reply->error() != QNetworkReply::NoError) {
-    emit ReportCommsError(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt(),reply->errorString());
+    emit ReportCommsError(
+        reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt(),
+        reply->errorString());
     return;
-  }
-  else GetPatientList();
+  } else
+    GetPatientList();
 }
 
 void Comms::DeletePatient(int patientId) {
@@ -96,20 +101,21 @@ void Comms::DeletePatient(int patientId) {
   request.setUrl(QUrl(ip_ + SeedEndpoint + "/" + QString::number(patientId)));
   request.setRawHeader("Authorization", auth_);
   manager->deleteResource(request);
-  QObject::connect(
-      manager, &QNetworkAccessManager::finished,
-      [&](QNetworkReply* reply) { ProcessDeletePatient(reply); });
+  QObject::connect(manager, &QNetworkAccessManager::finished,
+                   [&](QNetworkReply* reply) { ProcessDeletePatient(reply); });
 }
 
-void Comms::ProcessDeletePatient(QNetworkReply *reply) {
+void Comms::ProcessDeletePatient(QNetworkReply* reply) {
   qDebug() << "Comms::ProcessDeletePatient";
   QString errors("");
 
   if (reply->error() != QNetworkReply::NoError) {
-    emit ReportCommsError(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt(),reply->errorString());
+    emit ReportCommsError(
+        reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt(),
+        reply->errorString());
     return;
-  }
-  else GetPatientList();
+  } else
+    GetPatientList();
 }
 
 Patient Comms::ReadJsonPatient(QJsonObject obj) {
@@ -133,7 +139,6 @@ Patient Comms::ReadJsonPatient(QJsonObject obj) {
 }
 
 QByteArray Comms::CreateJsonPatient(Patient patient) {
-
   QJsonObject patientObject;
   patientObject.insert(json_name, patient.name);
   patientObject.insert(json_surname, patient.surname);

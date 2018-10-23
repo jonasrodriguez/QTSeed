@@ -7,21 +7,21 @@ BusinessLogic::BusinessLogic() : logged_user_("") {
   comms_ = std::unique_ptr<IComms>(new Comms);
   db_ = std::unique_ptr<IDb>(new DbManager);
 
-  QObject::connect(comms_.get(), &IComms::SendPatients,
-                    this, &BusinessLogic::ProcessPatients);
+  QObject::connect(comms_.get(), &IComms::SendPatients, this,
+                   &BusinessLogic::ProcessPatients);
 
-  QObject::connect(comms_.get(), &IComms::LoginSuccess,
-                    this, &BusinessLogic::ProcessLoginSuccess);
+  QObject::connect(comms_.get(), &IComms::LoginSuccess, this,
+                   &BusinessLogic::ProcessLoginSuccess);
 
-  QObject::connect(comms_.get(), &IComms::ReportCommsError,
-                    this, &BusinessLogic::ProcessCommsError);
+  QObject::connect(comms_.get(), &IComms::ReportCommsError, this,
+                   &BusinessLogic::ProcessCommsError);
 }
 
 void BusinessLogic::StartUp() {
   db_->StartUp();
   comms_->SetCommsAddress("http://127.0.0.1", "8080");
 
-//  LoginUser("Systelab","Systelab");
+  //  LoginUser("Systelab","Systelab");
 }
 
 void BusinessLogic::ShutDown() {
@@ -39,9 +39,7 @@ void BusinessLogic::ProcessLoginSuccess(QString user) {
   emit SendLoginStatus(true);
 }
 
-void BusinessLogic::GetPatientList() {
-  comms_->GetPatientList();
-}
+void BusinessLogic::GetPatientList() { comms_->GetPatientList(); }
 
 void BusinessLogic::ProcessPatients(QVector<Patient> patients) {
   emit SendPatientList(patients);
@@ -56,10 +54,10 @@ void BusinessLogic::DeletePatient(int patientId) {
 }
 
 void BusinessLogic::ProcessCommsError(int errorCode, QString errorSummary) {
-    if (errorCode == 401) {
-        logged_user_ = "";
-        emit SendLoginStatus(false);
-    }
+  if (errorCode == 401) {
+    logged_user_ = "";
+    emit SendLoginStatus(false);
+  }
   qDebug() << "errorCode" << errorCode;
   qDebug() << "errorSummary" << errorSummary;
 }
