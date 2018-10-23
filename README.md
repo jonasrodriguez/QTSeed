@@ -1,7 +1,3 @@
-# seed-cpp — Seed for QT Systelab projects
+# OUTDATED #
 
-This project is an application skeleton for a client QT application.
-
-## Getting Started
-
-Clone and build with cmake.
+This repository is obsolete. The current development has been integrated as a fork of systelab/cpp-sqlite-db-adapter (see https://github.com/jonasrodriguez/seed-qt.git).
